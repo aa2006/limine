@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <fs/file.h>
 #include <fs/echfs.h>
+#include <fs/flat_fs.h>
 #include <fs/ext2.h>
 #include <fs/fat32.h>
 #include <fs/iso9660.h>
@@ -18,6 +19,9 @@ bool fs_get_guid(struct guid *guid, struct volume *part) {
     }
     if (ext2_check_signature(part)) {
         return ext2_get_guid(guid, part);
+    }
+    if (flatfs_check_signature(part)) {
+      return flatfs_get_guid(guid, part);
     }
 
     return false;
@@ -66,6 +70,20 @@ int fopen(struct file_handle *ret, struct volume *part, const char *filename) {
         ret->fd   = (void *)fd;
         ret->read = (void *)echfs_read;
         ret->size = fd->dir_entry.size;
+
+        return 0;
+    }
+
+    if (flatfs_check_signature(part)) {
+        struct flatfs_file_handle *fd = ext_mem_alloc(sizeof(struct flatfs_file_handle));
+
+        int r = flatfs_open(fd, part, filename);
+        if (r)
+            return r;
+
+        ret->fd   = (void *)fd;
+        ret->read = (void *)flatfs_read;
+        ret->size = fd->size;
 
         return 0;
     }
