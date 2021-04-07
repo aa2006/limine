@@ -1,5 +1,9 @@
 # Limine
 
+## Quick note
+This fork of limine is taken from the [flat-os](https://github.com/flat-os/limine) which in turn is taken form [limine](https://github.com/limine-bootloader/limine).  
+FlatOS adds support for the FlatFS which is used in MandelbrotOS.
+
 ### What is Limine?
 
 Limine is an advanced x86/x86_64 BIOS/UEFI Bootloader which supports *modern* PC features
@@ -19,6 +23,7 @@ such as Long Mode, 5-level paging, and SMP (multicore), to name a few.
 ### Supported filesystems
 * ext2/3/4
 * echfs
+* FlatFS
 * FAT16/32
 * ISO9660 (CDs/DVDs)
 
@@ -34,26 +39,15 @@ shipped in the `-binary` branches and tags of this repository (see [branches](ht
 
 For example, to clone the latest binary release of the `v2.0` branch one can do
 ```bash
-git clone https://github.com/limine-bootloader/limine.git --branch=v2.0-branch-binary --depth=1
+git clone https://github.com/MandelbrotOS/limine.git --branch=v2.0-branch-binary --depth=1
 ```
 or, to clone a specific binary point release (for example v2.0.1)
 ```bash
-git clone https://github.com/limine-bootloader/limine.git --branch=v2.0.1-binary --depth=1
+git clone https://github.com/MandelbrotOS/limine.git --branch=v2.0.1-binary --depth=1
 ```
 
 `limine-install` binaries are provided for Linux and Windows. In case one wants to
 rebuild `limine-install`, simply use `make` in the binary release.
-
-## Warning about using `trunk`
-
-Please refrain from using the `trunk` branch of this repository directly, unless
-you have a *very* good reason to.
-The `trunk` branch is unstable, and non-backwards compatible changes are made to it
-routinely.
-
-Also note that the documentation contained in `trunk` does not reflect the
-documentation for the specific releases, and one should refer to the releases'
-respective documentation instead, contained in their files.
 
 ## Building the bootloader
 
@@ -189,7 +183,3 @@ One can get `echfs-utils` by installing https://github.com/echfs/echfs.
 
 ## Acknowledgments
 Limine uses a stripped-down version of [tinf](https://github.com/jibsen/tinf).
-
-## Discord server
-We have a [Discord server](https://discord.gg/QEeZMz4) if you need support, info, or
-you just want to hang out with us.
